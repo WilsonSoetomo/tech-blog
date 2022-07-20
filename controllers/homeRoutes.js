@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
         },
       ],
     });
-    console.log(dbPosts);
+    // console.log(dbPosts);
     var serializedata = dbPosts.map(data => data.get({ plain: true }))
     res.render("home", {
       posts: serializedata,
@@ -30,7 +30,7 @@ router.get("/posts", async (req, res) => {
     //don't forget to use await!
     const dbPosts = await Posts.findAll();
     var serializedata = dbPosts.map(data => data.get({ plain: true }))
-    console.log(dbPosts);
+    // console.log(dbPosts);
     res.render("posts", {
       product: serializedata,
     });

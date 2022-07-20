@@ -25,7 +25,11 @@ router.post('/login', async (req, res) => {
         username: req.body.username,
       },
     });
+    //need to serialize UserData
     console.log('userdata', UserData);
+    const serializedata = UserData.get({ plain: true });
+    console.log('serializedata', serializedata);
+
     if (!UserData) {
       res
         .status(401)
@@ -34,7 +38,7 @@ router.post('/login', async (req, res) => {
     }
     const passwordValid = await bcrypt.compare(
       req.body.password,
-      UserData.password
+      serializedata.password
     );
     console.log('passworddata', passwordValid);
     if (!passwordValid) {
