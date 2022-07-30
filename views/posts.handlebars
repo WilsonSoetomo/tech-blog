@@ -1,8 +1,29 @@
+{{!-- create an input box with a title and description box --}}
+<div class="postBox">
+  <h2>Upload a Post!</h2>
+  <form id="postForm">
+    <div class="titleBox">
+      <input type="text" required="" id="titlePost" placeholder="Title of post">
+    </div>
+    <div class="descriptionBox">
+      <input type="text" required="" id="descriptionPost" placeholder="Description of post">
+    </div>
+    <a href="#" class="ui-button" id="submitPost">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Submit
+    </a>
+  </form>
+</div>
+
+
 <div>
   {{#each posts}}
     <div>
       <h2>{{title}}</h2>
-      
+      <h2>{{description}}</h2>
     </div>
   {{/each}}
 </div>

@@ -1,10 +1,12 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
+const { reset } = require('nodemon');
 const { Users } = require('../../models');
 
 
 router.post('/', async (req, res) => {
   try {
+    console.log('user register body', req.body);
     const userData = await Users.create(req.body);
     req.session.save(() => {
       req.session.loggedIn = true;
@@ -36,9 +38,8 @@ router.post('/login', async (req, res) => {
         .json({ message: 'Invalid Username or Password. Please try again!' });
       return;
     }
-    const passwordValid = await bcrypt.compare(
-      req.body.password,
-      serializedata.password
+    const passwordValid = UserData.checkpassword(
+      req.body.password
     );
     console.log('passworddata', passwordValid);
     if (!passwordValid) {
@@ -48,8 +49,10 @@ router.post('/login', async (req, res) => {
       return;
     }
     req.session.save(() => {
-      req.sessions, (loggedIn = true);
-      req
+      req.session.loggedIn = true;
+      req.session.username = serializedata.username;
+      req.session.password = serializedata.password;
+      res
         .status(200)
         .json({ user: UserData, message: 'You are now logged in!' });
     });

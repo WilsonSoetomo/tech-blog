@@ -32,7 +32,7 @@ router.get("/posts", async (req, res) => {
     var serializedata = dbPosts.map(data => data.get({ plain: true }))
     // console.log(dbPosts);
     res.render("posts", {
-      product: serializedata,
+      posts: serializedata,
     });
     //serialize the data, [{dataValues:{data in here you want}}];
 

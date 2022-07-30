@@ -2,14 +2,14 @@
     <h2>Register</h2>
   <form id='registerForm'>
     <div class='user-box'>
-      <input type='text' name='registerEmail' required='' />
+      <input type='text' name='registerEmail' required='' id='registerUsername'/>
       <label>Username</label>
     </div>
     <div class='user-box'>
-      <input type='password' name='registerPassword' required='' />
+      <input type='password' name='registerPassword' required='' id='registerPassword'/>
       <label>Password</label>
     </div>
-    <a href='#' class='ui-button'>
+    <a class='ui-button' id="registerButton">
       <span></span>
       <span></span>
       <span></span>
@@ -24,3 +24,35 @@
 
 <p class='success' style='display: none;'> Success! </p>
 <p class='error' style='display: none;'> Error.. </p>
+
+<script>
+  document.querySelector('#registerButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    var username = document.querySelector('#registerUsername').value;
+    var password = document.querySelector('#registerPassword').value;
+    var data = {
+      username: username,
+      password: password
+    };
+    //send data to server
+    fetch('/api/users', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+      }).then((res)=> {
+          if(res.ok){
+              console.log('success');
+          console.log(res);
+          window.location.href = '/'; 
+          return res.json();
+          }else {
+              alert("Wrong Username or Password");
+          }
+         
+      }).catch((err)=> {
+          console.log('error', err);
+      });
+  });
+</script>
