@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
       ],
     });
     // console.log(dbPosts);
-    var serializedata = dbPosts.map(data => data.get({ plain: true }))
+    var serializedata = dbPosts.map((data) => data.get({ plain: true }));
     res.render("home", {
       posts: serializedata,
     });
@@ -29,7 +29,7 @@ router.get("/posts", async (req, res) => {
     //grab all posts from db using the Posts model,
     //don't forget to use await!
     const dbPosts = await Posts.findAll();
-    var serializedata = dbPosts.map(data => data.get({ plain: true }))
+    var serializedata = dbPosts.map((data) => data.get({ plain: true }));
     // console.log(dbPosts);
     res.render("posts", {
       posts: serializedata,
@@ -52,8 +52,30 @@ router.get("/posts/:id", authy, async (req, res) => {
         },
       ],
     });
-    var serializedata = dbPosts.map(data => data.get({ plain: true }))
+    var serializedata = dbPosts.map((data) => data.get({ plain: true }));
     res.render("posts", {
+      posts: serializedata,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// this is edit route for particular post
+router.get("/editpost/:id", async (req, res) => {
+  //look up post using id, then render edit view
+  try {
+    const dbPosts = await Posts.findByPk(req.params.id, {
+      include: [
+        {
+          model: Posts,
+        },
+      ],
+    });
+    var serializedata = dbPosts.map((data) => data.get({ plain: true }));
+    res.render("editpost", {
       posts: serializedata,
       loggedIn: req.session.loggedIn,
     });
